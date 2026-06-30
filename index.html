@@ -3,361 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike Roar Rater - TFJS On-Device</title>
-    
-    <!-- Load TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-    <!-- Load Teachable Machine Audio Extension (Handles complex FFT/Spectrogram math automatically) -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
-
+    <title>TN Establishment Desk (TN-ED) | Master Pay Fixation & Service Rules Suite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff4500;
-            --secondary: #222;
-            --bg: #0a0a0a;
-            --text: #ffffff;
-            --accent: #00ff7f;
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
+        .nav-tab-active {
+            background-color: #eff6ff;
+            color: #1e40af;
+            border-left: 4px solid #2563eb;
         }
-
-        .container {
-            background-color: var(--secondary);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.15);
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Top highlight bar */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-
-        h1 { margin-top: 0; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
-        p { color: #aaaaaa; font-size: 0.95rem; margin-bottom: 25px; }
-
-        #record-btn {
-            background: linear-gradient(145deg, #ff5722, #e63e00);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 90px; height: 90px;
-            font-size: 32px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 69, 0, 0.4);
-            margin: 10px auto 25px auto;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        #record-btn:active { transform: scale(0.9); }
-        
-        #record-btn.recording {
-            background: #dc143c;
-            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7); }
-            70% { box-shadow: 0 0 0 25px rgba(220, 20, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0); }
-        }
-
-        /* Progress Bar for the 5s capture */
-        .progress-container { width: 100%; height: 6px; background: #333; border-radius: 3px; margin-bottom: 15px; display: none; overflow: hidden; }
-        .progress-bar { height: 100%; width: 0%; background: var(--primary); transition: width 0.1s linear; }
-
-        .results { display: none; animation: slideUp 0.5s ease-out forwards; border-top: 1px solid #333; padding-top: 20px; }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .score-box { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 15px; }
-        .score-display { font-size: 4rem; font-weight: 900; color: var(--accent); margin: 0; line-height: 1; text-shadow: 0 0 15px rgba(0,255,127,0.3); }
-        .bonus-text { font-size: 0.8rem; color: #ffeb3b; margin-top: 5px; }
-
-        .bike-badge {
-            display: inline-block; padding: 6px 12px; border-radius: 6px;
-            background: #333; font-weight: bold; font-size: 1.1rem; margin: 10px 0;
-            border-left: 4px solid var(--primary);
-        }
-
-        .trash-talk {
-            font-size: 1.1rem; font-style: italic; background: rgba(255,255,255,0.05);
-            padding: 15px; border-radius: 8px; margin-top: 10px; border: 1px solid #444;
-        }
-
-        #status { color: #888; font-size: 0.9rem; font-weight: 500; height: 20px; }
     </style>
 </head>
-<body>
-
-    <div class="container">
-        <h1>Roar Rater</h1>
-        <p>100% On-Device AI Architecture</p>
-        
-        <button id="record-btn">🎤</button>
-        
-        <div class="progress-container" id="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        
-        <div id="status">Tap mic to load AI and record</div>
-
-        <div class="results" id="results-card">
-            <div class="score-box">
-                <div style="font-size: 0.9rem; color:#aaa; text-transform:uppercase; letter-spacing:1px;">Final Roar Score</div>
-                <div class="score-display" id="roar-score">0</div>
-                <div class="bonus-text" id="bonus-text">+0 Character Bonus</div>
+<body class="bg-gray-100 min-h-screen font-sans text-gray-800 flex flex-col">
+    
+    <div class="gradient-bg text-white py-5 px-6 shadow-md flex-shrink-0">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold tracking-tight">TN Establishment Desk (TN-ED)</h1>
+                <p class="text-blue-200 text-xs mt-0.5 font-medium">Unified Service Rules compliance &amp; Administrative Pay Fixing Workbench</p>
             </div>
+            <span class="text-[10px] bg-slate-900 bg-opacity-40 text-blue-300 font-mono px-3 py-1 rounded-full border border-blue-900">Portal Dashboard v4.0</span>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto w-full flex-grow p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-auto lg:h-max space-y-1">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">Establishment Tools</p>
             
-            <div><span class="bike-badge" id="bike-class">Analyzing...</span></div>
-            <div class="trash-talk" id="trash-talk-text"></div>
+            <button onclick="switchTab('tab-deferrals')" id="btn-tab-deferrals" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition flex items-center gap-2.5 nav-tab-active">
+                <span>📅</span> FR-26 Increment Deferral Engine
+            </button>
+            
+            <button onclick="switchTab('tab-anomaly')" id="btn-tab-anomaly" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition flex items-center gap-2.5">
+                <span>⚖️</span> FR-27(2) Pay Anomaly Desk
+            </button>
+            
+            <button onclick="switchTab('tab-milestones')" id="btn-tab-milestones" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition flex items-center gap-2.5">
+                <span>📈</span> G.O. 303 Milestone &amp; Grades
+            </button>
+            
+            <button onclick="switchTab('tab-notional')" id="btn-tab-notional" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition flex items-center gap-2.5">
+                <span>🔵</span> Punishment: With Notional
+            </button>
+            
+            <button onclick="switchTab('tab-cumulative')" id="btn-tab-cumulative" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition flex items-center gap-2.5">
+                <span>🔴</span> Punishment: Cumulative Effect
+            </button>
+        </div>
+
+        <div class="lg:col-span-3">
+            
+            <div id="tab-deferrals" class="tab-content workspace-panel space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 bg-white p-5 rounded-xl shadow-sm border border-gray-200 space-y-4">
+                        <h2 class="text-sm font-bold text-gray-900 border-b pb-1.5 uppercase tracking-wider text-blue-800">Parameters Configuration</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Original Increment Due Date</label>
+                            <input type="date" id="originalDate" class="w-full p-2 border border-gray-300 rounded-lg text-sm" value="2025-07-01">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Calculation Metric Standard</label>
+                            <select id="calcMethod" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
+                                <option value="flat">Departmental Standard (30 Days = 1 Month)</option>
+                                <option value="exact">Strict Calendar Days Shift</option>
+                            </select>
+                        </div>
+                        <div class="border-t pt-3 space-y-2">
+                            <span class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide">Add Interruption Triggers</span>
+                            <button onclick="addEventRow('Loss of Pay (LOP)', 'bg-red-50 border-red-200 text-red-800 bg-red-200 text-red-900', '2024-07-01', '2024-12-02')" class="w-full text-left p-2 text-xs font-semibold rounded border border-red-300 bg-red-50 hover:bg-red-100 text-red-800 transition flex justify-between items-center">
+                                <span>+ Add LOP Spell</span><span class="text-[10px] bg-red-200 px-1.5 rounded text-red-900 font-mono">FR 26</span>
+                            </button>
+                            <button onclick="addEventRow('Suspension Period', 'bg-yellow-50 border-yellow-200 text-yellow-800 bg-yellow-200 text-yellow-900', '', '')" class="w-full text-left p-2 text-xs font-semibold rounded border border-yellow-300 bg-yellow-50 hover:bg-yellow-100 text-yellow-800 transition flex justify-between items-center">
+                                <span>+ Add Suspension Spell</span><span class="text-[10px] bg-yellow-200 px-1.5 rounded text-yellow-900 font-mono">FR 54</span>
+                            </button>
+                            <button onclick="addEventRow('Depromotion / Reduction', 'bg-purple-50 border-purple-200 text-purple-800 bg-purple-200 text-purple-900', '', '')" class="w-full text-left p-2 text-xs font-semibold rounded border border-purple-300 bg-purple-50 hover:bg-purple-100 text-purple-800 transition flex justify-between items-center">
+                                <span>+ Add Demotion Block</span><span class="text-[10px] bg-purple-200 px-1.5 rounded text-purple-900 font-mono">FR 29</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 space-y-6">
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                            <div class="flex justify-between items-center mb-4 border-b pb-1.5">
+                                <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wide">Active Interrupt Chronology</h2>
+                                <button onclick="runMasterEngine()" class="px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg text-xs shadow transition">Run Computations</button>
+                            </div>
+                            <div class="space-y-3 min-h-24" id="masterEventContainer">
+                                <div class="p-3 rounded-lg border relative event-box bg-red-50 border-red-200" data-type="Loss of Pay (LOP)">
+                                    <button class="absolute top-1.5 right-2.5 text-gray-400 hover:text-red-600 font-bold text-xs" onclick="this.parentElement.remove(); runMasterEngine();">✕</button>
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                        <div>
+                                            <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase rounded bg-red-200 text-red-900">Loss of Pay (LOP)</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input type="date" class="evt-from p-1 text-xs border rounded bg-white shadow-sm" value="2024-07-01">
+                                            <span class="text-[10px] text-gray-400 font-bold">to</span>
+                                            <input type="date" class="evt-to p-1 text-xs border rounded bg-white shadow-sm" value="2024-12-02">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg border relative event-box bg-red-50 border-red-200" data-type="Loss of Pay (LOP)">
+                                    <button class="absolute top-1.5 right-2.5 text-gray-400 hover:text-red-600 font-bold text-xs" onclick="this.parentElement.remove(); runMasterEngine();">✕</button>
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                        <div>
+                                            <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase rounded bg-red-200 text-red-900">Loss of Pay (LOP)</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input type="date" class="evt-from p-1 text-xs border rounded bg-white shadow-sm" value="2024-12-07">
+                                            <span class="text-[10px] text-gray-400 font-bold">to</span>
+                                            <input type="date" class="evt-to p-1 text-xs border rounded bg-white shadow-sm" value="2025-01-01">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 space-y-4">
+                            <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wide">Analytical Metric Outputs</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-3 bg-gray-900 text-white rounded-lg flex flex-col justify-between">
+                                    <div class="flex justify-between items-center"><span class="text-[10px] font-semibold text-gray-400 uppercase">Net Non-Qualifying Service</span><span id="collisionAlert" class="hidden text-[9px] bg-yellow-500 text-gray-900 px-1 rounded font-black animate-pulse">Merged Overlaps!</span></div>
+                                    <span class="text-xl font-mono font-bold text-blue-400 mt-1" id="dashTotalDays">0 Days</span>
+                                </div>
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <span class="block text-[10px] font-semibold text-blue-700 uppercase">Postponement Timeline Adjustment</span>
+                                    <span class="text-base font-bold text-blue-900 block mt-1" id="dashConverted">0 Months, 0 Days</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between items-center p-2 bg-gray-50 rounded border"><span class="text-gray-600 font-medium">Mathematical Eligibility Date:</span><span class="font-mono font-bold text-gray-900" id="dashMathDate">-</span></div>
+                                <div class="flex justify-between items-center p-2.5 bg-yellow-50 rounded border border-yellow-200"><div><span class="block text-yellow-900 font-bold">TN Standard Regulated Quarterly Gate:</span><span class="text-[10px] text-yellow-600 block">Aligned to next dynamic index pool entry</span></div><span class="font-mono text-base font-black text-yellow-900" id="dashQuarterDate">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-anomaly" class="tab-content workspace-panel hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-purple-900 tracking-tight border-b pb-2">FR-27(2) Pay Anomaly Rectification Framework</h2>
+                    <p class="text-xs text-gray-500 mt-1">Independent reference panel for stepped-up pay parity fixing under standard TN service conditions</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-100 text-xs space-y-2">
+                        <span class="block font-bold text-purple-950 uppercase tracking-wide text-[10px]">Statutory Verification Checkpoints</span>
+                        <ul class="list-disc pl-4 space-y-1 text-purple-900">
+                            <li>Both Senior and Junior must belong to the exact same feeder cadre.</li>
+                            <li>The scales of pay for the lower and higher posts must be completely identical.</li>
+                            <li>Disparity must arise solely from the mechanical implementation of pay fixation rules.</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-600 mb-1">Senior's Current Pay (₹)</label>
+                                <input type="number" id="seniorPay" class="w-full p-2 border border-gray-300 rounded-lg text-xs" placeholder="e.g. 56100" oninput="checkAnomaly()">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-600 mb-1">Junior's Current Pay (₹)</label>
+                                <input type="number" id="juniorPay" class="w-full p-2 border border-gray-300 rounded-lg text-xs" placeholder="e.g. 57800" oninput="checkAnomaly()">
+                            </div>
+                        </div>
+                        <div id="anomalyAlertBox" class="p-3 rounded-lg border text-xs font-semibold bg-gray-50 text-gray-600 border-gray-200">
+                            Enter pay values above to cross-verify potential stepping-up claims.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-milestones" class="tab-content workspace-panel hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-green-900 tracking-tight border-b pb-2">G.O. 303 Milestone Progression &amp; Career Grades</h2>
+                    <p class="text-xs text-gray-500 mt-1">Standalone structural engine for assessing milestone grade jumps and stagnation relief increments</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-green-50 rounded-xl border border-green-100 space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Current Base Basic Pay (₹)</label>
+                            <input type="number" id="gradeBasePay" class="w-full p-2 border border-gray-300 rounded-lg bg-white" placeholder="e.g. 56100" value="56100" oninput="runMilestoneEngine()">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Pay Matrix Level Block</label>
+                            <select id="matrixLevel" class="w-full p-2 border border-gray-300 rounded-lg bg-white" onchange="runMilestoneEngine()">
+                                <option value="low">Level 1 to Level 23 (Standard Scales)</option>
+                                <option value="high">Level 24 and Above (Super Scales)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Target Milestone Attained</label>
+                            <select id="serviceMilestone" class="w-full p-2 border border-gray-300 rounded-lg bg-white" onchange="runMilestoneEngine()">
+                                <option value="sg">Selection Grade (10 Years in Post)</option>
+                                <option value="spg">Special Grade (20 Years in Post)</option>
+                                <option value="stag">Stagnation Increment (Peak Stage reached)</option>
+                                <option value="bonus">Bonus Increment (30 Years Service)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 space-y-4 flex flex-col justify-between">
+                        <div class="p-4 bg-gray-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-white border rounded-lg">
+                                <span class="block text-[10px] text-gray-400 font-semibold uppercase">Additional Steps Advantage</span>
+                                <span class="text-sm font-bold text-gray-800 block mt-1" id="milestoneIncrementCount">2 Increments (approx. 6%)</span>
+                            </div>
+                            <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <span class="block text-[10px] text-green-700 font-semibold uppercase">Projected Basic Pay</span>
+                                <span class="text-xl font-mono font-black text-green-900 block mt-1" id="milestoneProjectedPay">₹ 59,500</span>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-gray-800 text-gray-300 rounded-xl text-[11px] space-y-1">
+                            <h4 class="font-bold text-white uppercase text-[10px] tracking-wide">Departmental Directives</h4>
+                            <p>• Selection &amp; Special Grade adjustments allocate 2 forward steps within standard matrix thresholds (Levels 1-23).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-notional" class="tab-content workspace-panel hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-indigo-900 tracking-tight border-b pb-2">Increment Punishment WITH Notional Benefits</h2>
+                    <p class="text-xs text-gray-500 mt-1">Evaluator for non-cumulative stoppages of increments under Discipline &amp; Appeal Rules</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100 space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Current Basic Pay (₹)</label>
+                            <input type="number" id="notionalBasePay" class="w-full p-2 border border-gray-300 rounded-lg bg-white" placeholder="e.g. 50000" value="50000" oninput="runNotionalEngine()">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Stoppage Duration (Years)</label>
+                            <input type="number" id="notionalYears" class="w-full p-2 border border-gray-300 rounded-lg bg-white" min="1" max="10" value="1" oninput="runNotionalEngine()">
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="p-4 bg-gray-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-red-50 border border-red-100 rounded-lg">
+                                <span class="block text-[10px] font-semibold text-red-700 uppercase">Pay During Punishment</span>
+                                <span class="text-lg font-mono font-bold text-red-900 mt-0.5 block" id="notionalPayDuring">₹ 50,000</span>
+                            </div>
+                            <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-lg">
+                                <span class="block text-[10px] font-semibold text-indigo-700 uppercase">Restored Pay Post-Penalty</span>
+                                <span class="text-lg font-mono font-bold text-indigo-900 mt-0.5 block" id="notionalPayAfter">₹ 51,500</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-gray-500 italic">Analytical Framework: Service counts notionally during the freeze; intermediate financial arrears are withheld.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-cumulative" class="tab-content workspace-panel hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-orange-900 tracking-tight border-b pb-2">Increment Punishment WITHOUT Notional Benefits (Cumulative Effect)</h2>
+                    <p class="text-xs text-gray-500 mt-1">Evaluator for cumulative increment block stoppages resulting in permanent stage down-shifts</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-orange-50 rounded-xl border border-orange-100 space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Current Basic Pay (₹)</label>
+                            <input type="number" id="cumulativeBasePay" class="w-full p-2 border border-gray-300 rounded-lg bg-white" placeholder="e.g. 50000" value="50000" oninput="runCumulativeEngine()">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Stoppage Duration (Years)</label>
+                            <input type="number" id="cumulativeYears" class="w-full p-2 border border-gray-300 rounded-lg bg-white" min="1" max="10" value="1" oninput="runCumulativeEngine()">
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="p-4 bg-gray-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-red-50 border border-red-100 rounded-lg">
+                                <span class="block text-[10px] font-semibold text-red-700 uppercase">Pay During Punishment</span>
+                                <span class="text-lg font-mono font-bold text-red-900 mt-0.5 block" id="cumulativePayDuring">₹ 50,000</span>
+                            </div>
+                            <div class="p-3 bg-orange-50 border border-orange-100 rounded-lg">
+                                <span class="block text-[10px] font-semibold text-orange-700 uppercase">Permanent Adjusted Pay Post-Penalty</span>
+                                <span class="text-lg font-mono font-bold text-orange-900 mt-0.5 block" id="cumulativePayAfter">₹ 51,500</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-gray-500 italic">Analytical Framework: The stopped index progression step cycles are permanently deleted from the active career matrix timeline tracking ledger.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // --- 1. CONFIGURATION ---
-        // REPLACE this URL with your own Teachable Machine Audio model link once you train it!
-        // Example: "https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/"
-        const URL = "https://teachablemachine.withgoogle.com/models/placeholder/"; 
-        
-        const RECORD_DURATION_MS = 5000; // 5 seconds
-        
-        // Trash Talk Engine (Tamil-English)
-        const trashTalkTemplates = {
-            low: [
-                "Enna ba, mixer grinder sound kekuthu! 😂",
-                "TVS 50 ah idhu? Needs more throat! 🛵",
-                "Sathame illa... Cycle otlama ba? 🚲"
-            ],
-            medium: [
-                "Not bad, aana innum konjam raw power thevai! 🏍️",
-                "Decent ah irukku, but where is the bass man? 🤔",
-                "KTM Duke vibes, pulling out okay! 🔥"
-            ],
-            high: [
-                "Verithanam! Pure muscle! 💥",
-                "Therikkavidalama! That's a beast roaring! 🦁",
-                "Kaantha kural! Royal Enfield thozha! 👑"
-            ]
-        };
-
-        // UI Elements
-        const recordBtn = document.getElementById('record-btn');
-        const statusText = document.getElementById('status');
-        const resultsCard = document.getElementById('results-card');
-        const roarScoreEl = document.getElementById('roar-score');
-        const bikeClassEl = document.getElementById('bike-class');
-        const trashTalkEl = document.getElementById('trash-talk-text');
-        const bonusTextEl = document.getElementById('bonus-text');
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-
-        // State Variables
-        let isRecording = false;
-        let recognizer;
-        let audioContext;
-        let analyser;
-        let microphone;
-        let maxVolume = 0;
-        let detectedClass = "Unknown";
-        let maxConfidence = 0;
-        let progressInterval;
-
-        // --- 2. TFJS MODEL LOADING ---
-        async function createModel() {
-            const checkpointURL = URL + "model.json"; // model topology
-            const metadataURL = URL + "metadata.json"; // model metadata
-
-            try {
-                const recognizer = speechCommands.create(
-                    "BROWSER_FFT", // Fourier transform type
-                    undefined,     // speech commands vocabulary feature
-                    checkpointURL,
-                    metadataURL
-                );
-                // check that model and metadata are loaded
-                await recognizer.ensureModelLoaded();
-                return recognizer;
-            } catch (e) {
-                console.warn("Real TFJS model not found. Falling back to Mock Engine for UI testing.");
-                return null; // Return null to trigger the graceful fallback demo
-            }
+        function switchTab(targetTabId) {
+            document.querySelectorAll('.workspace-panel').forEach(el => el.classList.add('hidden'));
+            document.getElementById(targetTabId).classList.remove('hidden');
+            
+            document.querySelectorAll('[id^="btn-tab-"]').forEach(btn => {
+                btn.className = "w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition flex items-center gap-2.5";
+            });
+            document.getElementById('btn-' + targetTabId).className = "w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition flex items-center gap-2.5 nav-tab-active";
         }
 
-        // --- 3. CORE LOGIC ---
-        recordBtn.addEventListener('click', async () => {
-            if (isRecording) return;
+        function addEventRow(title, labelClasses, defaultFrom, defaultTo) {
+            const container = document.getElementById('masterEventContainer');
+            const div = document.createElement('div');
+            const badgeClass = labelClasses.split(' ').slice(2).join(' ');
+            const cardBgClass = labelClasses.split(' ').slice(0,2).join(' ');
             
-            resultsCard.style.display = 'none';
-            statusText.innerText = 'Loading TFJS Model into memory...';
+            div.className = `p-3 rounded-lg border relative event-box ${cardBgClass}`;
+            div.setAttribute('data-type', title);
             
-            // Lazy load model on first click
-            if (!recognizer && recognizer !== null) {
-                recognizer = await createModel();
-            }
+            div.innerHTML = `
+                <button class="absolute top-1.5 right-2.5 text-gray-400 hover:text-red-600 font-bold text-xs" onclick="this.parentElement.remove(); runMasterEngine();">✕</button>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase rounded ${badgeClass}">${title}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="date" class="evt-from p-1 text-xs border rounded bg-white shadow-sm" value="${defaultFrom}" onchange="runMasterEngine()">
+                        <span class="text-[10px] text-gray-400 font-bold">to</span>
+                        <input type="date" class="evt-to p-1 text-xs border rounded bg-white shadow-sm" value="${defaultTo}" onchange="runMasterEngine()">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+            runMasterEngine();
+        }
 
-            startPipeline();
-        });
+        function runMasterEngine() {
+            const originalDateInput = document.getElementById('originalDate').value;
+            if (!originalDateInput) return;
 
-        async function startPipeline() {
-            try {
-                // Request raw microphone access for decibel calculation
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                setupDecibelTracker(stream);
+            let baseDate = new Date(originalDateInput);
+            const calculationStyle = document.getElementById('calcMethod').value;
+            const eventRows = document.querySelectorAll('.event-box');
+            
+            let intervals = [];
 
-                isRecording = true;
-                recordBtn.classList.add('recording');
-                progressContainer.style.display = 'block';
-                progressBar.style.width = '0%';
-                statusText.innerText = 'Listening... Rev the engine!';
-
-                // Start Progress Bar
-                let elapsed = 0;
-                progressInterval = setInterval(() => {
-                    elapsed += 100;
-                    progressBar.style.width = (elapsed / RECORD_DURATION_MS) * 100 + '%';
-                }, 100);
-
-                // If real TFJS model loaded, start classifying in real time
-                if (recognizer) {
-                    const classLabels = recognizer.wordLabels(); 
-                    recognizer.listen(result => {
-                        // Find highest confidence class during this window
-                        let scores = result.scores;
-                        let highestIndex = scores.indexOf(Math.max(...scores));
-                        
-                        if (scores[highestIndex] > maxConfidence) {
-                            maxConfidence = scores[highestIndex];
-                            detectedClass = classLabels[highestIndex];
-                        }
-                    }, {
-                        includeSpectrogram: false,
-                        probabilityThreshold: 0.75,
-                        invokeCallbackOnNoiseAndUnknown: true,
-                        overlapFactor: 0.50
-                    });
+            eventRows.forEach(row => {
+                const startVal = row.querySelector('.evt-from').value;
+                const endVal = row.querySelector('.evt-to').value;
+                
+                if (startVal && endVal) {
+                    const start = new Date(startVal);
+                    const end = new Date(endVal);
+                    if (end >= start) {
+                        intervals.push({ start: start.getTime(), end: end.getTime() });
+                    }
                 }
+            });
 
-                // Stop after 5 seconds
-                setTimeout(() => {
-                    stopPipeline(stream);
-                }, RECORD_DURATION_MS);
+            let mergedIntervals = [];
+            let componentsHaveCollided = false;
 
-            } catch (err) {
-                console.error(err);
-                statusText.innerText = "Error: Microphone permission denied.";
+            if (intervals.length > 0) {
+                intervals.sort((a, b) => a.start - b.start);
+                
+                let currentRange = intervals[0];
+                for (let i = 1; i < intervals.length; i++) {
+                    if (intervals[i].start <= currentRange.end + (1000 * 60 * 60 * 24)) {
+                        if (intervals[i].end > currentRange.end) {
+                            currentRange.end = intervals[i].end;
+                        }
+                        componentsHaveCollided = true;
+                    } else {
+                        mergedIntervals.push(currentRange);
+                        currentRange = intervals[i];
+                    }
+                }
+                mergedIntervals.push(currentRange);
+            }
+
+            let netTotalDays = 0;
+            mergedIntervals.forEach(range => {
+                const gapTime = range.end - range.start;
+                const daySpan = Math.ceil(gapTime / (1000 * 60 * 60 * 24)) + 1;
+                netTotalDays += daySpan;
+            });
+
+            const alertBadge = document.getElementById('collisionAlert');
+            if (componentsHaveCollided) alertBadge.classList.remove('hidden');
+            else alertBadge.classList.add('hidden');
+
+            document.getElementById('dashTotalDays').innerText = netTotalDays + ' Days';
+            let outputMathDate = new Date(baseDate);
+
+            if (calculationStyle === 'flat') {
+                const quotientMonths = Math.floor(netTotalDays / 30);
+                const modularDays = netTotalDays % 30;
+                document.getElementById('dashConverted').innerText = `${quotientMonths} Months, ${modularDays} Days`;
+                outputMathDate.setMonth(outputMathDate.getMonth() + quotientMonths);
+                outputMathDate.setDate(outputMathDate.getDate() + modularDays);
+            } else {
+                document.getElementById('dashConverted').innerText = 'Exact Calendar Days';
+                outputMathDate.setDate(outputMathDate.getDate() + netTotalDays);
+            }
+
+            const formatToLocale = d => d.toISOString().split('T')[0].split('-').reverse().join('-');
+            document.getElementById('dashMathDate').innerText = formatToLocale(outputMathDate);
+
+            let targetMonth = outputMathDate.getMonth();
+            let targetYear = outputMathDate.getFullYear();
+            let finalQuarterlyGate;
+
+            if (outputMathDate.getDate() === 1 && (targetMonth === 0 || targetMonth === 3 || targetMonth === 6 || targetMonth === 9)) {
+                finalQuarterlyGate = new Date(targetYear, targetMonth, 1);
+            } else {
+                if (targetMonth <= 2) finalQuarterlyGate = new Date(targetYear, 3, 1);
+                else if (targetMonth <= 5) finalQuarterlyGate = new Date(targetYear, 6, 1);
+                else if (targetMonth <= 8) finalQuarterlyGate = new Date(targetYear, 9, 1);
+                else finalQuarterlyGate = new Date(targetYear + 1, 0, 1);
+            }
+            document.getElementById('dashQuarterDate').innerText = formatToLocale(finalQuarterlyGate);
+        }
+
+        function checkAnomaly() {
+            const senior = parseFloat(document.getElementById('seniorPay').value);
+            const junior = parseFloat(document.getElementById('juniorPay').value);
+            const alertBox = document.getElementById('anomalyAlertBox');
+
+            if (isNaN(senior) || isNaN(junior)) {
+                alertBox.className = "p-3 rounded-lg border text-xs font-semibold bg-gray-50 text-gray-600 border-gray-200";
+                alertBox.innerText = "Enter pay values above to cross-verify potential stepping-up claims.";
+                return;
+            }
+            if (junior > senior) {
+                alertBox.className = "p-3 rounded-lg border text-xs font-semibold bg-red-50 text-red-800 border-red-200";
+                alertBox.innerHTML = `⚠️ Anomaly Detected: Junior draws higher pay. Senior may request stepping-up pay alignment parity.`;
+            } else {
+                alertBox.className = "p-3 rounded-lg border text-xs font-semibold bg-green-50 text-green-800 border-green-200";
+                alertBox.innerText = "✅ Pay hierarchy matches standard service guidelines.";
             }
         }
 
-        function setupDecibelTracker(stream) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            analyser = audioContext.createAnalyser();
-            microphone = audioContext.createMediaStreamSource(stream);
-            microphone.connect(analyser);
-            analyser.fftSize = 256;
-            
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            maxVolume = 0;
+        function runMilestoneEngine() {
+            const basePay = parseFloat(document.getElementById('gradeBasePay').value);
+            const matrixLevel = document.getElementById('matrixLevel').value;
+            const milestone = document.getElementById('serviceMilestone').value;
 
-            function track() {
-                if (!isRecording) return;
-                analyser.getByteFrequencyData(dataArray);
-                let sum = 0;
-                for (let i = 0; i < bufferLength; i++) { sum += dataArray[i]; }
-                let avg = sum / bufferLength;
-                if (avg > maxVolume) maxVolume = avg; // Track peak volume
-                requestAnimationFrame(track);
+            if (isNaN(basePay) || basePay <= 0) return;
+
+            let applicableIncrements = 0;
+            let displayCountText = "";
+
+            if (milestone === 'sg' || milestone === 'spg') {
+                if (matrixLevel === 'low') {
+                    applicableIncrements = 2;
+                    displayCountText = "2 Increments (Standard - 6%)";
+                } else {
+                    applicableIncrements = 1;
+                    displayCountText = "Restricted to 1 Stagnation Increment (3%)";
+                }
+            } else if (milestone === 'stag' || milestone === 'bonus') {
+                applicableIncrements = 1;
+                displayCountText = "1 Increment (3%)";
             }
-            track();
+
+            let rawIncrementValue = Math.round(basePay * 0.03);
+            let totalAddedPay = rawIncrementValue * applicableIncrements;
+            let finalProjectedPay = Math.ceil((basePay + totalAddedPay) / 100) * 100;
+
+            document.getElementById('milestoneIncrementCount').innerText = displayCountText;
+            document.getElementById('milestoneProjectedPay').innerText = "₹ " + finalProjectedPay.toLocaleString('en-IN');
         }
 
-        function stopPipeline(stream) {
-            isRecording = false;
-            clearInterval(progressInterval);
-            recordBtn.classList.remove('recording');
-            progressContainer.style.display = 'none';
-            statusText.innerText = 'Processing completely on-device...';
+        function runNotionalEngine() {
+            const basePay = parseFloat(document.getElementById('notionalBasePay').value);
+            const years = parseInt(document.getElementById('notionalYears').value);
+            if (isNaN(basePay) || isNaN(years) || years <= 0) return;
 
-            // Clean up Audio Context
-            stream.getTracks().forEach(track => track.stop());
-            if (audioContext && audioContext.state !== 'closed') {
-                audioContext.close();
+            document.getElementById('notionalPayDuring').innerText = "₹ " + basePay.toLocaleString('en-IN');
+            let currentPay = basePay;
+            for (let i = 0; i < years; i++) {
+                currentPay += Math.round(currentPay * 0.03);
             }
-            if (recognizer) {
-                recognizer.stopListening();
-            }
-
-            calculateAndShowResults();
+            document.getElementById('notionalPayAfter').innerText = "₹ " + (Math.ceil(currentPay / 100) * 100).toLocaleString('en-IN');
         }
 
-        function calculateAndShowResults() {
-            // 1. Calculate Base Decibel Score (Mapping peak volume 0-255 to 0-85)
-            let baseScore = Math.min(85, Math.round((maxVolume / 255) * 85 * 1.5)); 
-            if (baseScore < 10) baseScore = Math.floor(Math.random() * 20) + 10; 
+        function runCumulativeEngine() {
+            const basePay = parseFloat(document.getElementById('cumulativeBasePay').value);
+            const years = parseInt(document.getElementById('cumulativeYears').value);
+            if (isNaN(basePay) || isNaN(years) || years <= 0) return;
 
-            // 2. Handle AI Bike Classification & Character Bonus
-            let characterBonus = 0;
-
-            // If the user hasn't put in their real Teachable Machine URL yet, Mock the AI
-            if (!recognizer) {
-                if (baseScore > 75) { detectedClass = "Royal Enfield Classic 350"; maxConfidence = 0.92; }
-                else if (baseScore > 50) { detectedClass = "KTM Duke 390"; maxConfidence = 0.85; }
-                else { detectedClass = "TVS XL Super"; maxConfidence = 0.78; }
-            }
-
-            // Assign Bonus based on AI Output (The "Character" Bonus from your architecture)
-            if (detectedClass.includes("Royal Enfield")) characterBonus = 15;
-            else if (detectedClass.includes("KTM")) characterBonus = 10;
-            else if (detectedClass.includes("Yamaha")) characterBonus = 8;
-            else characterBonus = 2; // Commuter bikes get low bonus
-
-            // 3. Final Roar Score Calculation
-            let finalScore = Math.min(100, baseScore + characterBonus);
-
-            // 4. Update UI
-            roarScoreEl.innerText = finalScore;
-            bonusTextEl.innerText = `+${characterBonus} Character Bonus (${detectedClass})`;
-            bikeClassEl.innerText = `${detectedClass} (Confidence: ${Math.round(maxConfidence * 100)}%)`;
-            
-            // 5. Fire Trash Talk Engine
-            let category = 'low';
-            if (finalScore > 75) category = 'high';
-            else if (finalScore > 40) category = 'medium';
-
-            const phrases = trashTalkTemplates[category];
-            trashTalkEl.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-
-            resultsCard.style.display = 'block';
-            statusText.innerText = 'Tap mic to test another bike!';
-            
-            // Reset state for next run
-            maxConfidence = 0;
-            detectedClass = "Unknown";
+            document.getElementById('cumulativePayDuring').innerText = "₹ " + basePay.toLocaleString('en-IN');
+            let stepUpPay = basePay + Math.round(basePay * 0.03);
+            document.getElementById('cumulativePayAfter').innerText = "₹ " + (Math.ceil(stepUpPay / 100) * 100).toLocaleString('en-IN');
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            runMasterEngine();
+            runMilestoneEngine();
+            runNotionalEngine();
+            runCumulativeEngine();
+        });
+        document.getElementById('calcMethod').addEventListener('change', runMasterEngine);
+        document.getElementById('originalDate').addEventListener('change', runMasterEngine);
     </script>
 </body>
 </html>
